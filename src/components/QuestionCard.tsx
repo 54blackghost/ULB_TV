@@ -31,8 +31,8 @@ const QuestionCard: React.FC<QuestionCardProps> = ({
     <Card>
       <div className="space-y-4">
         {/* Header with status */}
-        <div className="flex items-start justify-between">
-          <div className="flex-1">
+        <div className="flex  items-start justify-between ">
+          <div className="flex-1 ">
             <div className="flex items-center space-x-2 mb-2">
               {solved && (
                 <div className="flex items-center text-green-600">
@@ -41,7 +41,7 @@ const QuestionCard: React.FC<QuestionCardProps> = ({
                 </div>
               )}
             </div>
-            <h3 className="text-lg font-bold text-gray-700 hover:text-laravel-red transition-colors duration-300 cursor-pointer line-clamp-2">
+            <h3 className="text-lg max-w-80 font-bold text-gray-700 hover:text-laravel-red transition-colors duration-300 cursor-pointer line-clamp-2">
               {title}
             </h3>
           </div>
@@ -70,7 +70,7 @@ const QuestionCard: React.FC<QuestionCardProps> = ({
               className="w-8 h-8 rounded-full border-2 border-white shadow-sm"
             />
             <div>
-              <p className="text-sm font-medium text-gray-700">{author.name}</p>
+              <p className="text-sm w-50 font-medium text-gray-700">{author.name}</p>
               <div className="flex items-center text-xs text-gray-500 space-x-1">
                 <Clock className="h-3 w-3" />
                 <span>{postedAt}</span>

@@ -1,17 +1,18 @@
 import React, { useState } from 'react';
-import { Menu, X, Search, User, LogIn } from 'lucide-react';
+import {  SearchIcon, TicketPlus,MenuIcon  } from 'lucide-react';
+import { Link, useNavigate } from "react-router-dom";
 import Button from './ui/Button';
+import { useClerk, UserButton,  useUser } from "@clerk/clerk-react";
 
-const Header: React.FC = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  const navigationItems = [
-    { name: 'Articles', href: '#articles', active: true },
-    { name: 'Questions', href: '#questions' },
-    { name: 'Discussions', href: '#discussions' },
-    { name: 'Événements', href: '#events' },
-    { name: 'Packages', href: '#packages' },
-  ];
+const Header = () => {
+    const [isOpen, setIsopen,] = useState(false) //rendre la navbar responsive
+    const { user} = useUser()
+    const {openSignIn} = useClerk()
+
+
+  const navigate = useNavigate()
+
 
   return (
     <header className="bg-white shadow-sm border-b border-gray-100 sticky top-0 z-50">
@@ -20,8 +21,10 @@ const Header: React.FC = () => {
           {/* Logo */}
           <div className="flex items-center">
             <div className="flex-shrink-0">
-              <div className="w-45 h-10 bg-gradient-laravel rounded-md flex items-center justify-center">
-                <span className="text-white font-bold text-lg">Laravel.cm</span>
+              <div className="w-40 h-10 bg-gradient-laravel rounded-md flex items-center justify-center">
+                <Link to='/' className="max-md:flex-1">
+                  <span className="text-white font-bold text-lg ">ULB TV</span>
+                </Link>
               </div>
             </div>
           </div>
@@ -29,81 +32,43 @@ const Header: React.FC = () => {
           {/* Desktop Navigation */}
           <nav className="hidden md:block">
             <div className="ml-10 flex items-baseline space-x-2">
-              {navigationItems.map((item) => (
-                <a
-                  key={item.name}
-                  href={item.href}
-                  className={`px-4 py-2 rounded-md text-sm font-medium transition-all duration-300 ${
-                    item.active
-                      ? 'bg-laravel-red text-white'
-                      : 'text-gray-700 hover:bg-gray-50 hover:text-laravel-red'
-                  }`}
-                >
-                  {item.name}
-                </a>
-              ))}
+                <Link onClick={()=> {scrollTo(0,0); setIsopen(false)}} to='/'>Home</Link>
+                <Link onClick={()=> {scrollTo(0,0); setIsopen(false)}} to='/questions'>Questions</Link>
+                <Link onClick={()=> {scrollTo(0,0); setIsopen(false)}} to='/events'>Événements</Link>
+                <Link onClick={()=> {scrollTo(0,0); setIsopen(false)}} to='/blog'>Blog</Link>
+                
             </div>
           </nav>
 
           {/* Right side - Search and Auth */}
-          <div className="hidden md:flex items-center space-x-4">
+          <div className="flex items-center gap-8">
             <button className="p-2 text-gray-500 hover:text-laravel-red transition-colors duration-300">
-              <Search className="h-5 w-5" />
+              <SearchIcon className="max-md:hidden w-6 h-6 cursor-pointer" />
             </button>
             
-            <Button variant="outline" size="sm">
-              <LogIn className="h-4 w-4 mr-2" />
-              Connexion
-            </Button>
-            
-            <Button variant="primary" size="sm">
-              <User className="h-4 w-4 mr-2" />
-              S'inscrire
-            </Button>
-          </div>
+           {
+             !user ? (
+                    //script permettant de se logger ou signup grace a clerk 
+                    <button onClick={openSignIn} className="px-4 py-1 sm:px-7 sm:py-2 bg-primary
+                    hover:bg-primary-dull transition rounded-full font-medium
+                    cursor-pointer">Login</button>
+                ): (
+                    //script permettant de voir ses blogs enregistrer
+                    <UserButton>
+                        <UserButton.MenuItems>
+                            <UserButton.Action label="Blog" labelIcon=
+                            {<TicketPlus width={15}/>} onClick={()=> navigate('/blog')} />
+                        </UserButton.MenuItems>
+                    </UserButton>
+                )
+           }
 
-          {/* Mobile menu button */}
-          <div className="md:hidden">
-            <button
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="p-2 rounded-md text-gray-600 hover:text-laravel-red hover:bg-gray-100 transition-colors duration-300"
-            >
-              {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-            </button>
-          </div>
-        </div>
-      </div>
+          </div> 
 
-      {/* Mobile Navigation */}
-      {isMenuOpen && (
-        <div className="md:hidden bg-white border-t border-gray-100 animate-fade-in">
-          <div className="px-2 pt-2 pb-3 space-y-1">
-            {navigationItems.map((item) => (
-              <a
-                key={item.name}
-                href={item.href}
-                className={`block px-3 py-2 rounded-md text-base font-medium transition-all duration-300 ${
-                  item.active
-                    ? 'bg-laravel-red text-white'
-                    : 'text-gray-700 hover:bg-gray-50 hover:text-laravel-red'
-                }`}
-              >
-                {item.name}
-              </a>
-            ))}
-            <div className="flex flex-col space-y-2 pt-4 border-t border-gray-100 mt-4">
-              <Button variant="outline" size="sm" className="justify-center">
-                <LogIn className="h-4 w-4 mr-2" />
-                Connexion
-              </Button>
-              <Button variant="primary" size="sm" className="justify-center">
-                <User className="h-4 w-4 mr-2" />
-                S'inscrire
-              </Button>
-            </div>
-          </div>
+           <MenuIcon className="max-md:ml-4 md:hidden w-8 h-8 cursor-pointer"
+           onClick={()=>setIsopen(!isOpen)}/>
         </div>
-      )}
+      </div> 
     </header>
   );
 };
