@@ -24,7 +24,7 @@ const HeroSection: React.FC = () => {
 
 
       <button onClick={()=> navigate('/blog')} className="flex items-center gap-1 px-6 py-3 text-sm bg-primary
-        text-laravel-red transition rounded-full font-medium cursor-pointer">
+        text-laravel-red transition rounded-full font-medium cursor-pointer  hover:bg-primary-dull">
         Explore Blogs
         <ArrowRight className="w-5 h-5"/>
       </button>

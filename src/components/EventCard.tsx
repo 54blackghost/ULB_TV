@@ -93,8 +93,8 @@ const EventCard: React.FC<EventCardProps> = ({
         </div>
 
         {/* Action button */}
-        <div className="pt-4 border-t border-gray-100">
-          <Button variant="primary" className="w-full">
+        <div className="pt-4 border-t border-gray-100 ">
+          <Button variant="primary" className="w-full bg-primary">
             S'inscrire à l'événement
           </Button>
         </div>

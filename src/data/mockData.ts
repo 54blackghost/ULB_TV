@@ -14,6 +14,7 @@ export const mockArticles = [
     views: 1240,
     likes: 89,
     category: "Laravel",
+    vote_average: "6.4",
     image: "https://images.pexels.com/photos/11035380/pexels-photo-11035380.jpeg?auto=compress&cs=tinysrgb&w=800"
   },
   {
@@ -29,6 +30,7 @@ export const mockArticles = [
     views: 987,
     likes: 76,
     category: "PHP",
+    vote_average: "6.4",
     image: "https://images.pexels.com/photos/1181677/pexels-photo-1181677.jpeg?auto=compress&cs=tinysrgb&w=800"
   },
   {
@@ -44,6 +46,7 @@ export const mockArticles = [
     views: 1456,
     likes: 102,
     category: "API",
+    vote_average: "6.4",
     image: "https://images.pexels.com/photos/1181679/pexels-photo-1181679.jpeg?auto=compress&cs=tinysrgb&w=800"
   }
 ];

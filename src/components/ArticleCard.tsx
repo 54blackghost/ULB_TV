@@ -1,5 +1,5 @@
 import React from 'react';
-import { Calendar, User, Eye, Heart } from 'lucide-react';
+import { Calendar, User, Eye, Heart, StarIcon } from 'lucide-react';
 import Card from './ui/Card';
 import Badge from './ui/Badge';
 
@@ -15,6 +15,7 @@ interface ArticleCardProps {
   views: number;
   likes: number;
   category: string;
+  vote_average: string;
   image?: string;
 }
 
@@ -27,6 +28,7 @@ const ArticleCard: React.FC<ArticleCardProps> = ({
   views,
   likes,
   category,
+  vote_average,
   image = "https://images.pexels.com/photos/11035380/pexels-photo-11035380.jpeg?auto=compress&cs=tinysrgb&w=800"
 }) => {
   return (
@@ -71,7 +73,7 @@ const ArticleCard: React.FC<ArticleCardProps> = ({
               </div>
             </div>
           </div>
-
+          
           <div className="flex items-center space-x-4 text-xs text-gray-500">
             <div className="flex items-center space-x-1">
               <Eye className="h-3 w-3" />
@@ -80,6 +82,10 @@ const ArticleCard: React.FC<ArticleCardProps> = ({
             <div className="flex items-center space-x-1">
               <Heart className="h-3 w-3" />
               <span>{likes}</span>
+            </div>
+            <div className="flex items-center space-x-1">
+              <StarIcon className="h-3 w-3" />
+              <span>{vote_average}</span>
             </div>
           </div>
         </div>
