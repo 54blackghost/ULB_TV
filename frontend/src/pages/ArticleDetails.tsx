@@ -9,17 +9,19 @@ import { mockArticles } from '../data/mockData'
 const ArticleDetails = () => {
   const navigate = useNavigate()
   const {id} = useParams()
-  const [blog, setBlog] = useState(null)
+  const [blog, setBlog] = useState<{ article: string } | null>(null);
+ 
 
 
   //fonction pour afficher les details d'une serie
   const getBlog = async ()=>{
-    const blog = mockArticles.find(blog => blog.id === id)
+    const blog = mockArticles.find(blog => blog.id )
     if (blog) {
-      setBlog({
+      setBlog(prev => ({
+      ...prev,
       article: blog,
       dateTime: dummyDateTimeData
-    })
+    }));
     }
     
   }
