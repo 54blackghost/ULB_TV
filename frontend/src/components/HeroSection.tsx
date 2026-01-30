@@ -37,7 +37,7 @@ const HeroSection: React.FC = () => {
     // L'animation se déclenche quand le composant entre dans le viewport (whileInView)
     // et ne se joue qu'une seule fois (viewport={{ once: true }})
     <motion.div
-      className="flex flex-col items-start justify-center gap-4 px-6 md:px-16 lg:px-16 bg-[url('/logo.jpg')] bg-cover bg-center h-screen"
+      className="flex flex-col items-start justify-center gap-4 px-6 md:px-16 lg:px-16 bg-[url('/logo.png')] bg-cover bg-center h-screen"
       variants={containerVariants}
       initial="hidden"
       whileInView="visible"

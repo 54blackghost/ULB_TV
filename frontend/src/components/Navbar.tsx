@@ -45,7 +45,7 @@ const Navbar = () => {
               {
                 !user ? (
                     //script permettant de se logger ou signup grace a clerk 
-                    <button onClick= {openSignIn} className="px-4 py-1 sm:px-7 sm:py-2 bg-primary
+                    <button onClick={() => openSignIn()} className="px-4 py-1 sm:px-7 sm:py-2 bg-primary
                     hover:bg-primary-dull transition rounded-full font-medium text-laravel-red
                     cursor-pointer">Login</button>
                 ) : (
