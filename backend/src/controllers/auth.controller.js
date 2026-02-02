@@ -38,7 +38,7 @@ export const signup = async (req, res) => {
       name: req.body.name,
       email: req.body.email,
       password: req.body.password,
-      role: req.body.role,
+      // role defaults to 'user' as defined in the User model
     });
 
     createSendToken(newUser, 201, res);

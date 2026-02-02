@@ -14,6 +14,8 @@ import Video from "./pages/Video.tsx" // New import
 import VideoDetails from "./pages/VideoDetails.tsx" // New import
 import Signup from "./pages/Signup.tsx" // New import
 import Login from "./pages/Login.tsx" // New import
+import AdminDashboard from "./pages/AdminDashboard.tsx" // New import
+import ProtectedAdminRoute from "./components/ProtectedAdminRoute.tsx" // New import
 
 
 const App = () =>{
@@ -36,6 +38,12 @@ const App = () =>{
         <Route path='/videos/:slug' element={<VideoDetails />} /> {/* New route */}
         <Route  path='/signup' element={<Signup/>}/> {/* New route */}
         <Route path='/login' element={<Login />} /> {/* New route */}
+
+        {/* Admin Routes */}
+        <Route path="/" element={<ProtectedAdminRoute />}>
+          <Route path="/admin" element={<AdminDashboard />} />
+          {/* Future admin routes like /admin/articles, /admin/podcasts, etc. */}
+        </Route>
       
       </Routes>
       {!isAdminRoute && <Footer />}

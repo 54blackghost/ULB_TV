@@ -1,6 +1,6 @@
 const API_BASE_URL = 'http://localhost:3000/api/v1/users';
 
-export const signup = async (name, email, password) => {
+export const signup = async (name: string, email: string, password: string) => {
   try {
     const response = await fetch(`${API_BASE_URL}/signup`, {
       method: 'POST',
@@ -23,7 +23,7 @@ export const signup = async (name, email, password) => {
   }
 };
 
-export const login = async (email, password) => {
+export const login = async (email: string, password: string) => {
   try {
     const response = await fetch(`${API_BASE_URL}/login`, {
       method: 'POST',

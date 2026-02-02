@@ -37,6 +37,8 @@ const Signup = () => {
       <BlurCircle top="100px" left="0px" />
       <BlurCircle bottom="50px" right="50px" />
 
+      
+<br /><br />
       <div className="w-full max-w-md p-8 space-y-6 bg-white rounded-lg shadow-md z-10">
         <h2 className="text-2xl font-bold text-center text-gray-900">Create an Account</h2>
         <form onSubmit={handleSubmit} className="space-y-4">

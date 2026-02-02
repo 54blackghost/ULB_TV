@@ -1,21 +1,23 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { MenuIcon, SearchIcon, XIcon} from "lucide-react"
-// Removed Clerk imports
+import { useAuth } from "../context/AuthContext"; // New import
 
 const Navbar = () => {
 
   const [isOpen, setIsopen,] = useState(false) //rendre la navbar responsive
-  // Removed useUser and useClerk hooks
+  const { isAuthenticated, user, logoutUser, loading } = useAuth(); // Using useAuth hook
 
-  const navigate = useNavigate() // Keep useNavigate for other navigation, if needed.
+
+  const navigate = useNavigate()
 
     return (
         <div className='fixed top-0 left-0 z-50 w-full flex items-center 
         justify-between px-6 md:px-16 lg:px-36 py-5'>
            <Link to='/' className="max-md:flex-1">
              <span className="flex items-center gap-1 px-6 py-3 text-sm bg-primary
-        text-laravel-red transition rounded-full font-medium cursor-pointer  hover:bg-primary-dull">ULB TV</span>
+        text-laravel-red transition rounded-full font-medium text-laravel-red
+        cursor-pointer  hover:bg-primary-dull">ULB TV</span>
            </Link> 
 
            <div className={`max-md:absolute max-md:top-0 max-md:left-0 max-md:font-medium
@@ -41,12 +43,25 @@ const Navbar = () => {
            <div className="flex items-center gap-8">
               <SearchIcon className="max-md:hidden w-6 h-6 cursor-pointer"/>
             
-              {/* Replaced Clerk-dependent login/user button */}
-              <Link to="/login" className="px-4 py-1 sm:px-7 sm:py-2 bg-primary
-                hover:bg-primary-dull transition rounded-full font-medium text-laravel-red
-                cursor-pointer">Login</Link>
-              
-              {/* A Logout button would require global auth state management */}
+              {loading ? ( // Show loading state for auth
+                <span>Loading...</span>
+              ) : isAuthenticated ? (
+                <>
+                  <span className="text-white">Welcome, {user?.name}!</span>
+                  <button onClick={logoutUser} className="px-4 py-1 sm:px-7 sm:py-2 bg-primary
+                    hover:bg-primary-dull transition rounded-full font-medium text-laravel-red
+                    cursor-pointer">Logout</button>
+                </>
+              ) : (
+                <>
+                  <Link to="/login" className="px-4 py-1 sm:px-7 sm:py-2 bg-primary
+                    hover:bg-primary-dull transition rounded-full font-medium text-laravel-red
+                    cursor-pointer">Login</Link>
+                  <Link to="/signup" className="px-4 py-1 sm:px-7 sm:py-2 bg-primary
+                    hover:bg-primary-dull transition rounded-full font-medium text-laravel-red
+                    cursor-pointer">Sign Up</Link>
+                </>
+              )}
               
            </div>
 
