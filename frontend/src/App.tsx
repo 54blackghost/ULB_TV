@@ -8,6 +8,12 @@ import Questions from "./pages/Questions.tsx"
 import Events from "./pages/Events.tsx"
 import Article from "./pages/Article.tsx"
 import ArticleDetails from "./pages/ArticleDetails.tsx"
+import Podcast from "./pages/Podcast.tsx" // New import
+import PodcastDetails from "./pages/PodcastDetails.tsx" // New import
+import Video from "./pages/Video.tsx" // New import
+import VideoDetails from "./pages/VideoDetails.tsx" // New import
+import Signup from "./pages/Signup.tsx" // New import
+import Login from "./pages/Login.tsx" // New import
 
 
 const App = () =>{
@@ -23,7 +29,13 @@ const App = () =>{
         <Route  path='/questions' element={<Questions/>} />
         <Route path='/events'  element={<Events/>}/>
         <Route  path='/blog' element={<Article/>}/>
-        <Route path='/blog/:id' element={<ArticleDetails />} />
+        <Route path='/blog/:slug' element={<ArticleDetails />} />
+        <Route  path='/podcasts' element={<Podcast/>}/> {/* New route */}
+        <Route path='/podcasts/:slug' element={<PodcastDetails />} /> {/* New route */}
+        <Route  path='/videos' element={<Video/>}/> {/* New route */}
+        <Route path='/videos/:slug' element={<VideoDetails />} /> {/* New route */}
+        <Route  path='/signup' element={<Signup/>}/> {/* New route */}
+        <Route path='/login' element={<Login />} /> {/* New route */}
       
       </Routes>
       {!isAdminRoute && <Footer />}

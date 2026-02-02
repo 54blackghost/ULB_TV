@@ -1,112 +1,97 @@
-import React, { useEffect, useState } from 'react'
-import { useNavigate, useParams } from 'react-router-dom'
-import BlurCircle from '../components/BlurCircle'
-import { Heart, StarIcon } from 'lucide-react'
-import Loading from '../components/Loading'
-import ArticleCard from '../components/ArticleCard'
-import { mockArticles } from '../data/mockData'
+import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import { getArticleBySlug } from '../services/api';
+import { BackendArticle } from '../components/types';
+import Loading from '../components/Loading';
+import BlurCircle from '../components/BlurCircle';
 
 const ArticleDetails = () => {
-  const navigate = useNavigate()
-  const {id} = useParams()
-  const [blog, setBlog] = useState<{ article: string } | null>(null);
- 
+  const { slug } = useParams<{ slug: string }>();
+  const [article, setArticle] = useState<BackendArticle | null>(null);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
 
+  useEffect(() => {
+    const fetchArticle = async () => {
+      if (!slug) {
+        setError('Article slug is missing.');
+        setLoading(false);
+        return;
+      }
+      try {
+        setLoading(true);
+        const fetchedArticle = await getArticleBySlug(slug);
+        setArticle(fetchedArticle);
+      } catch (err) {
+        setError('Failed to fetch article. Please try again later.');
+        console.error(err);
+      } finally {
+        setLoading(false);
+      }
+    };
 
-  //fonction pour afficher les details d'une serie
-  const getBlog = async ()=>{
-    const blog = mockArticles.find(blog => blog.id )
-    if (blog) {
-      setBlog(prev => ({
-      ...prev,
-      article: blog,
-      dateTime: dummyDateTimeData
-    }));
-    }
-    
+    fetchArticle();
+  }, [slug]);
+
+  if (loading) {
+    return <Loading />;
   }
-  useEffect(()=>{
-    getBlog()
-  },[id])
 
+  if (error) {
+    return (
+      <div className="flex flex-col items-center justify-center h-screen">
+        <h1 className="text-3xl font-bold text-center text-red-500">{error}</h1>
+      </div>
+    );
+  }
 
-  return blog ? (
-    <div className="px-6 md:px-16 lg:px-40 pt-30 md:pt-50">
-      <div className="flex flex-col md:flex-row gap-8 max-w-6xl mx-auto">
-        
-        <img src={blog.article.poster_path} alt="image" className="max-md:mx-auto
-        rounded-xl h-104 w-70 object-cover" />
-         
-        <div className="relative flex flex-col gap-3">
-            <BlurCircle  top="100px" left="100px"/>
-            <p className="text-primary">ENGLISH</p>
-            <h1 className="text-4xl font-semibold max-w-96 text-balance">{blog.article.title}</h1>
-            <div className="flex items-center gap-2 text-gray-300">
-              <StarIcon  className="w-5 h-5 text-primary fill-primary"/>
-              {blog.article.vote_average.toFixed(1)} User Rating
-            </div>
+  if (!article) {
+    return (
+      <div className="flex flex-col items-center justify-center h-screen">
+        <h1 className="text-3xl font-bold text-center">Article non trouvé</h1>
+      </div>
+    );
+  }
 
-            <p className="text-gray-400 mt-2 text-sm leading-tight max-w-xl">
-              {blog.article.excerpt}
-            </p> 
+  return (
+    <div className="relative my-40 mb-60 px-6 md:px lg:px-40 xl:px-44 overflow-hidden min-h[80vh]">
+      <BlurCircle top="150px" left="0px" />
+      <BlurCircle bottom="50px" right="50px" />
 
-            <p>
-              {timeFormat(blog.article.runtime)} . {blog.article.genres.map(genre =>
-                genre.name).join(", ")} . {blog.article.publishedAt.split("-")[0]}
-            </p>
-
-            <div className="flex items-center flex-wrap gap-4 mt-4">
-              <button className="flex items-center gap-2 px-7 py-3 test-sm
-              bg-gray-800 hover:bg-gray-900 transtion rounded-md font font-medium 
-              cursor-pointer active:scale-95">
-                <PlayCircleIcon className="w-5 h-5"/>
-                Watch Trailler
-                </button>
-              <a href="#dateSelect" className="px-10 py-3 text-sm bg-primary 
-              hover:bg-primary-dull transition rounded-md font-medium cursor-pointer
-               active:scale-95">Buy Tickets</a>
-              <button className="bg-gray-700 p-2.5 rounded-full transition *:cursor-pointer active:scale-95">
-                <Heart className={'w-5 h-5'}/>
-              </button>
-            </div>
+      <div className="max-w-4xl mx-auto">
+        <h1 className="text-4xl font-bold text-gray-800 mb-6">{article.title}</h1>
+        <div className="flex items-center text-gray-600 mb-8 text-sm">
+          <img
+            src={`https://i.pravatar.cc/50?u=${article.author._id}`} // Placeholder avatar
+            alt={article.author.name}
+            className="w-8 h-8 rounded-full mr-2"
+          />
+          <span>Par {article.author.name}</span>
+          <span className="mx-2">•</span>
+          <span>
+            Publié le{' '}
+            {new Date(article.createdAt).toLocaleDateString('fr-FR', {
+              year: 'numeric',
+              month: 'long',
+              day: 'numeric',
+            })}
+          </span>
         </div>
-      </div> 
 
-      <p className="text-lg font-medium mt-20">Your Favorite Cast</p>
-      <div className="overflow-x-auto no-scrollbar mt-8 pb-4">
-        <div className="flex items-center gap-4 w-max px-4">
-          {blog.article.author.slice(0,12).map((author, index)=>(
-            <div key={index} className="flex flex-col items-center text-center">
-               <img src={author.avatar} alt="image" className="rounded-full h-20
-               md:h-20 aspect-square object-cover"/>
-               <p className="font-medium text-xs mt-3">{author.name}</p>
-            </div>
-      
-          ))}
+        {article.coverImage && (
+          <img
+            src={article.coverImage}
+            alt={article.title}
+            className="w-full h-80 object-cover rounded-lg mb-8 shadow-md"
+          />
+        )}
+
+        <div className="prose prose-lg max-w-none" dangerouslySetInnerHTML={{ __html: article.content }}>
+          {/* Article content will be rendered here */}
         </div>
       </div>
-
-      
-
-       <p className="text-lg font-medium mt-20 mb-8">You May Also Like</p>
-       
-       <div className="flex flex-wrap max-sm:justify-center gap-4">
-        {mockArticles.slice(0,4).map((article, index)=>(
-          <ArticleCard key={index} {...article}/>
-        ))}
-       </div>
-        
-
-
-       <div className="flex justify-center mt-20">
-        <button onClick={()=>{navigate('/movies'); scrollTo(0,0)}} className="px-10
-        py-3 text-sm bg-primary hover:bg-primary-dull transition
-        rounded-md font-medium cursor-pointer">
-         Show more 
-        </button>
-       </div>
     </div>
-  ) : <Loading/>
-}
+  );
+};
 
-export default ArticleDetails
+export default ArticleDetails;
