@@ -26,7 +26,7 @@ const Login = () => {
   };
 
   return (
-    <div className="relative flex items-center justify-center min-h-screen bg-gray-50 overflow-hidden">
+    <div className="relative flex items-center justify-center min-h-screen bg-[url('/logo.png')] bg-cover bg-center overflow-hidden">
       <BlurCircle top="100px" left="0px" />
       <BlurCircle bottom="50px" right="50px" />
 

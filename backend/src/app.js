@@ -25,11 +25,11 @@ app.use('/api/v1/videos', videoRouter);
 app.use('/api/v1/users', authRouter);
 
 // Not Found Handler
-app.all('*', (req, res, next) => {
-  res.status(404).json({
-    status: 'fail',
-    message: `Can't find ${req.originalUrl} on this server!`,
-  });
+app.use((req, res, next) => {
+  const err = new Error(`Can't find ${req.originalUrl} on this server!`);
+  err.statusCode = 404;
+  err.status = 'fail';
+  next(err);
 });
 
 // Global Error Handling Middleware (optional, but good practice)

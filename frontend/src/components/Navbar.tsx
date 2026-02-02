@@ -1,17 +1,14 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { MenuIcon, SearchIcon, TicketPlus, XIcon} from "lucide-react"
-import { useClerk, UserButton, useUser } from "@clerk/clerk-react";
+import { MenuIcon, SearchIcon, XIcon} from "lucide-react"
+// Removed Clerk imports
 
 const Navbar = () => {
 
   const [isOpen, setIsopen,] = useState(false) //rendre la navbar responsive
-  const { user} = useUser()
-  const {openSignIn} = useClerk()
+  // Removed useUser and useClerk hooks
 
-
-  const navigate = useNavigate()
-
+  const navigate = useNavigate() // Keep useNavigate for other navigation, if needed.
 
     return (
         <div className='fixed top-0 left-0 z-50 w-full flex items-center 
@@ -36,28 +33,20 @@ const Navbar = () => {
               <Link onClick={()=> {scrollTo(0,0); setIsopen(false)}} to='/questions'>Questions</Link>
               <Link onClick={()=> {scrollTo(0,0); setIsopen(false)}} to='/events'>Evenements</Link>
               <Link onClick={()=> {scrollTo(0,0); setIsopen(false)}} to='/blog'>Blog</Link>
+              <Link onClick={()=> {scrollTo(0,0); setIsopen(false)}} to='/podcasts'>Podcasts</Link> {/* Added link for new page */}
+              <Link onClick={()=> {scrollTo(0,0); setIsopen(false)}} to='/videos'>Videos</Link> {/* Added link for new page */}
            </div>
 
 
            <div className="flex items-center gap-8">
               <SearchIcon className="max-md:hidden w-6 h-6 cursor-pointer"/>
             
-              {
-                !user ? (
-                    //script permettant de se logger ou signup grace a clerk 
-                    <button onClick={() => openSignIn()} className="px-4 py-1 sm:px-7 sm:py-2 bg-primary
-                    hover:bg-primary-dull transition rounded-full font-medium text-laravel-red
-                    cursor-pointer">Login</button>
-                ) : (
-                    //script permettant de voir ses bookings enregistrer
-                    <UserButton>
-                        <UserButton.MenuItems>
-                            <UserButton.Action label="My Bookings" labelIcon=
-                            {<TicketPlus width={15}/>} onClick={()=> navigate('/my-bookings')} />
-                        </UserButton.MenuItems>
-                    </UserButton>
-                )
-              }
+              {/* Replaced Clerk-dependent login/user button */}
+              <Link to="/login" className="px-4 py-1 sm:px-7 sm:py-2 bg-primary
+                hover:bg-primary-dull transition rounded-full font-medium text-laravel-red
+                cursor-pointer">Login</Link>
+              
+              {/* A Logout button would require global auth state management */}
               
            </div>
 
