@@ -35,8 +35,6 @@ const Navbar = () => {
               <Link onClick={()=> {scrollTo(0,0); setIsopen(false)}} to='/questions'>Questions</Link>
               <Link onClick={()=> {scrollTo(0,0); setIsopen(false)}} to='/events'>Evenements</Link>
               <Link onClick={()=> {scrollTo(0,0); setIsopen(false)}} to='/blog'>Blog</Link>
-              <Link onClick={()=> {scrollTo(0,0); setIsopen(false)}} to='/podcasts'>Podcasts</Link> {/* Added link for new page */}
-              <Link onClick={()=> {scrollTo(0,0); setIsopen(false)}} to='/videos'>Videos</Link> {/* Added link for new page */}
            </div>
 
 

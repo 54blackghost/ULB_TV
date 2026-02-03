@@ -18,6 +18,7 @@ import AdminDashboard from "./pages/AdminDashboard.tsx" // New import
 import ProtectedAdminRoute from "./components/ProtectedAdminRoute.tsx" // New import
 import AdminArticles from "./pages/AdminArticles.tsx" // New import for admin articles
 import ArticleForm from "./components/ArticleForm.tsx" // New import for article form
+import AboutUs from "./pages/AboutUs.tsx" // New import for AboutUs page
 
 
 const App = () =>{
@@ -40,6 +41,7 @@ const App = () =>{
         <Route path='/videos/:slug' element={<VideoDetails />} /> {/* New route */}
         {/* <Route  path='/signup' element={<Signup/>}/> Removed route */}
         <Route path='/login' element={<Login />} /> {/* New route */}
+        <Route path='/about-us' element={<AboutUs />} /> {/* New route for About Us */}
 
         {/* Admin Routes */}
         <Route path="/" element={<ProtectedAdminRoute />}>
