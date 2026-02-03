@@ -3,6 +3,7 @@ dotenv.config({ path: './.env' });
 
 import app from './app.js';
 import connectDB from './config/database.js';
+import User from './models/User.model.js'; // Import the User model
 
 // Handle Uncaught exceptions
 process.on('uncaughtException', (err) => {
@@ -13,6 +14,32 @@ process.on('uncaughtException', (err) => {
 
 // Connect to database
 connectDB();
+
+// Function to create a default admin user if one doesn't exist
+const createDefaultAdmin = async () => {
+  try {
+    const adminEmail = 'admin@example.com';
+    const adminPassword = 'admin12345'; // This will be hashed by the pre-save hook
+
+    const existingAdmin = await User.findOne({ email: adminEmail, role: 'admin' });
+
+    if (!existingAdmin) {
+      await User.create({
+        name: 'Default Admin',
+        email: adminEmail,
+        password: adminPassword,
+        role: 'admin',
+      });
+      console.log('Default admin user created.');
+    } else {
+      console.log('Default admin user already exists.');
+    }
+  } catch (error) {
+    console.error('Error creating default admin user:', error);
+  }
+};
+
+createDefaultAdmin(); // Call the function to create default admin
 
 const port = process.env.PORT || 3000;
 const server = app.listen(port, () => {

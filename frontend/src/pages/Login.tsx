@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { login } from '../services/authService';
+// import { login } from '../services/authService'; // Remove this import
 import BlurCircle from '../components/BlurCircle';
+import { useAuth } from '../context/AuthContext';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -9,17 +10,25 @@ const Login = () => {
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const navigate = useNavigate();
+  const { loginUser, isAdmin, user } = useAuth(); // Get loginUser, isAdmin, and user from useAuth
+
+  useEffect(() => {
+    if (user && isAdmin) {
+      navigate('/admin');
+    } else if (user && !isAdmin) {
+      navigate('/');
+    }
+  }, [user, isAdmin, navigate]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
-
     setLoading(true);
     try {
-      await login(email, password);
-      navigate('/'); // Redirect to home page after successful login
-    } catch (err: any) {
-      setError(err.message || 'Login failed');
+      await loginUser(email, password); // Use loginUser from AuthContext
+      // The redirection logic will now be handled by the useEffect above
+    } catch (err: unknown) {
+      setError((err instanceof Error) ? err.message : 'Login failed');
     } finally {
       setLoading(false);
     }
