@@ -19,6 +19,8 @@ import ProtectedAdminRoute from "./components/ProtectedAdminRoute.tsx" // New im
 import AdminArticles from "./pages/AdminArticles.tsx" // New import for admin articles
 import ArticleForm from "./components/ArticleForm.tsx" // New import for article form
 import AboutUs from "./pages/AboutUs.tsx" // New import for AboutUs page
+import AdminPodcasts from "./pages/AdminPodcasts.tsx" // New import for admin podcasts
+import PodcastForm from "./components/PodcastForm.tsx" // New import for podcast form
 
 
 const App = () =>{
@@ -49,6 +51,11 @@ const App = () =>{
           <Route path="/admin/articles" element={<AdminArticles />} />
           <Route path="/admin/articles/new" element={<ArticleForm />} />
           <Route path="/admin/articles/edit/:id" element={<ArticleForm isEditing={true} />} />
+
+          {/* Podcast Admin Routes */}
+          <Route path="/admin/podcasts" element={<AdminPodcasts />} />
+          <Route path="/admin/podcasts/new" element={<PodcastForm />} />
+          <Route path="/admin/podcasts/edit/:id" element={<PodcastForm isEditing={true} />} />
         </Route>
       
       </Routes>
