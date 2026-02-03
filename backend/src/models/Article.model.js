@@ -23,6 +23,7 @@ const articleSchema = new mongoose.Schema(
       type: String,
       default: 'default.jpg',
     },
+    videoUrl: String, // Add videoUrl field
   },
   {
     timestamps: true,

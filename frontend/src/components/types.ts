@@ -31,6 +31,7 @@ export interface BackendArticle {
   content: string;
   author: BackendUser;
   coverImage: string;
+  videoUrl?: string; // Add videoUrl as optional
   createdAt: string;
   updatedAt: string;
 }

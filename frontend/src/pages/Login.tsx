@@ -1,91 +1,117 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
-// import { login } from '../services/authService'; // Remove this import
-import BlurCircle from '../components/BlurCircle';
+import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import { signup } from '../services/authService';
+import toast from 'react-hot-toast'; // Assuming react-hot-toast is available
 
-const Login = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState<string | null>(null);
-  const [loading, setLoading] = useState<boolean>(false);
-  const navigate = useNavigate();
-  const { loginUser, isAdmin, user } = useAuth(); // Get loginUser, isAdmin, and user from useAuth
+const AuthPage = () => {
+    const [state, setState] = useState("login"); // "login" or "register"
+    const [formData, setFormData] = useState({
+        name: '',
+        email: '',
+        password: ''
+    });
+    const [error, setError] = useState<string | null>(null);
+    const [loading, setLoading] = useState<boolean>(false);
 
-  useEffect(() => {
-    if (user && isAdmin) {
-      navigate('/admin');
-    } else if (user && !isAdmin) {
-      navigate('/');
-    }
-  }, [user, isAdmin, navigate]);
+    const navigate = useNavigate();
+    const { loginUser, isAdmin, user } = useAuth();
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setError(null);
-    setLoading(true);
-    try {
-      await loginUser(email, password); // Use loginUser from AuthContext
-      // The redirection logic will now be handled by the useEffect above
-    } catch (err: unknown) {
-      setError((err instanceof Error) ? err.message : 'Login failed');
-    } finally {
-      setLoading(false);
-    }
-  };
+    useEffect(() => {
+        if (user) { // If user is logged in
+            if (isAdmin) {
+                navigate('/admin');
+            } else {
+                navigate('/');
+            }
+        }
+    }, [user, isAdmin, navigate]);
 
-  return (
-    <div className="relative flex items-center justify-center min-h-screen bg-[url('/logo.png')] bg-cover bg-center overflow-hidden">
-      <BlurCircle top="100px" left="0px" />
-      <BlurCircle bottom="50px" right="50px" />
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+        setError(null);
+        setLoading(true);
 
-      <div className="w-full max-w-md p-8 space-y-6 bg-white rounded-lg shadow-md z-10">
-        <h2 className="text-2xl font-bold text-center text-gray-900">Log in to your Account</h2>
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div>
-            <label htmlFor="email" className="block text-sm font-medium text-gray-700">
-              Email
-            </label>
-            <input
-              type="email"
-              id="email"
-              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-            />
-          </div>
-          <div>
-            <label htmlFor="password" className="block text-sm font-medium text-gray-700">
-              Password
-            </label>
-            <input
-              type="password"
-              id="password"
-              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
-          </div>
-          {error && <p className="text-sm text-red-600">{error}</p>}
-          <button
-            type="submit"
-            className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-            disabled={loading}
-          >
-            {loading ? 'Logging in...' : 'Log In'}
-          </button>
-        </form>
-        <p className="text-sm text-center text-gray-600">
-          Don't have an account?{' '}
-          <Link to="/signup" className="font-medium text-blue-600 hover:text-blue-500">
-            Sign up
-          </Link>
-        </p>
-      </div>
-    </div>
-  );
+        try {
+            if (state === "login") {
+                await loginUser(formData.email, formData.password);
+                toast.success('Logged in successfully!');
+            } else { // state === "register"
+                await signup(formData.name, formData.email, formData.password);
+                toast.success('Account created successfully! Please log in.');
+                setState("login"); // Switch to login state after successful signup
+            }
+        } catch (err: unknown) {
+            const errorMessage = (err instanceof Error) ? err.message : 'An unknown error occurred.';
+            setError(errorMessage);
+            toast.error(errorMessage);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const { name, value } = e.target;
+        setFormData(prev => ({ ...prev, [name]: value }));
+    };
+
+    return (
+        <div className="relative flex items-center justify-center min-h-screen bg-[url('/logo.png')] bg-cover bg-center overflow-hidden">
+            {/* Keeping the BlurCircle placeholders for now, can be removed if not desired */}
+            {/* <BlurCircle top="100px" left="0px" />
+            <BlurCircle bottom="50px" right="50px" /> */}
+
+            <form
+                onSubmit={handleSubmit}
+                className="sm:w-87.5 w-full text-center bg-gray-900 border border-gray-800 rounded-2xl px-8 py-8 z-10" // Added py-8 for vertical padding
+            >
+                <h1 className="text-white text-3xl mt-2 font-medium"> {/* Adjusted mt-10 to mt-2 */}
+                    {state === "login" ? "Login" : "Sign up"}
+                </h1>
+
+                <p className="text-gray-400 text-sm mt-2">Please {state === "login" ? "sign in" : "sign up"} to continue</p>
+
+                {state !== "login" && (
+                    <div className="flex items-center mt-6 w-full bg-gray-800 border border-gray-700 h-12 rounded-full overflow-hidden pl-6 gap-2 ">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" className="text-gray-400" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"> <circle cx="12" cy="8" r="5" /> <path d="M20 21a8 8 0 0 0-16 0" /> </svg>
+                        <input type="text" name="name" placeholder="Name" className="w-full bg-transparent text-white placeholder-gray-400 border-none outline-none " value={formData.name} onChange={handleChange} required />
+                    </div>
+                )}
+
+                <div className="flex items-center mt-4 w-full bg-gray-800 border border-gray-700 h-12 rounded-full overflow-hidden pl-6 gap-2 ">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" className="text-gray-400" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"> <path d="m22 7-8.991 5.727a2 2 0 0 1-2.009 0L2 7" /> <rect x="2" y="4" width="20" height="16" rx="2" /> </svg>
+                    <input type="email" name="email" placeholder="Email id" className="w-full bg-transparent text-white placeholder-gray-400 border-none outline-none " value={formData.email} onChange={handleChange} required />
+                </div>
+
+                <div className=" flex items-center mt-4 w-full bg-gray-800 border border-gray-700 h-12 rounded-full overflow-hidden pl-6 gap-2 ">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" className="text-gray-400" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"> <rect width="18" height="11" x="3" y="11" rx="2" ry="2" /> <path d="M7 11V7a5 5 0 0 1 10 0v4" /> </svg>
+                    <input type="password" name="password" placeholder="Password" className="w-full bg-transparent text-white placeholder-gray-400 border-none outline-none" value={formData.password} onChange={handleChange} required />
+                </div>
+
+                {state === "login" && (
+                    <div className="mt-4 text-left">
+                        <button type="button" className="text-sm text-indigo-400 hover:underline">
+                            Forget password?
+                        </button>
+                    </div>
+                )}
+
+                {error && <p className="text-sm text-red-600 mt-4">{error}</p>}
+
+                <button type="submit" className="mt-4 w-full h-11 rounded-full text-white bg-indigo-600 hover:bg-indigo-500 transition " disabled={loading}> {/* Adjusted mt-2 to mt-4 */}
+                    {loading ? (state === "login" ? 'Logging in...' : 'Signing up...') : (state === "login" ? "Login" : "Sign up")}
+                </button>
+
+                <p onClick={() => {
+                    setState(prev => prev === "login" ? "register" : "login");
+                    setError(null); // Clear error when switching state
+                }} className="text-gray-400 text-sm mt-3 mb-4 cursor-pointer" > {/* Adjusted mb-11 to mb-4 */}
+                    {state === "login" ? "Don't have an account?" : "Already have an account?"}
+                    <span className="text-indigo-400 hover:underline ml-1">click here</span>
+                </p>
+            </form>
+        </div>
+    );
 };
 
-export default Login;
+export default AuthPage;
