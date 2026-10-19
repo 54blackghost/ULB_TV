@@ -1,15 +1,17 @@
+import { About } from '../components/site/About'
+import { Hero } from '../components/site/Hero'
+import React from 'react'
 
-import FeaturesSection from '../components/FeaturesSection'
-import HeroSection from '../components/HeroSection'
-import Stats from '../components/Stats'
+import { Events } from '../components/site/Events'
+//import BlogCard  from '../components/site/BlogCard'
 
-const Home = () => {
+ const Home = () => {
   return (
     <>
-      <HeroSection />
+      <Hero/>
       <br /><br />
-      <Stats/>
-      <FeaturesSection/>
+      <About/>
+      <Events/>
     </>
   )
 }

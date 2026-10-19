@@ -1,45 +1,142 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Outfit:wght@100..900&display=swap');
-@import "tailwindcss";
+@import "tailwindcss" source(none);
+@import "tw-animate-css";
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap');
 
+@source "../src";
+@custom-variant dark (&:is(.dark *));
 
-
-
-@theme {
-   --color-primary: #312782;
-   --color-primary-dull: #009540;
+@theme inline {
+  --font-display: "Space Grotesk", system-ui, sans-serif;
+  --font-sans: "Inter", system-ui, sans-serif;
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --radius-3xl: calc(var(--radius) + 12px);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary-glow: var(--primary-glow);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-surface: var(--surface);
+  --color-surface-elevated: var(--surface-elevated);
 }
 
-*{
-   font-family: "Montserrat", sans-serif; 
-   scrollbar-width: thin;
-   scrollbar-color: #787777 #1e1e1e;
+:root {
+  --radius: 0.875rem;
+
+  /* ULB Agence — dark futuristic palette */
+  --background: oklch(0.13 0.025 270);          /* #050816 ish */
+  --foreground: oklch(0.98 0.005 270);
+
+  --surface: oklch(0.17 0.022 270);
+  --surface-elevated: oklch(0.21 0.024 270);
+
+  --card: oklch(0.17 0.022 270);
+  --card-foreground: oklch(0.98 0.005 270);
+  --popover: oklch(0.17 0.022 270);
+  --popover-foreground: oklch(0.98 0.005 270);
+
+  /* Orange #FFA500 ≈ oklch(0.78 0.18 65) */
+  --primary: oklch(0.78 0.18 65);
+  --primary-foreground: oklch(0.13 0.025 270);
+  --primary-glow: oklch(0.83 0.16 70);
+
+  --secondary: oklch(0.22 0.024 270);
+  --secondary-foreground: oklch(0.98 0.005 270);
+  --muted: oklch(0.22 0.024 270);
+  --muted-foreground: oklch(0.7 0.02 270);
+  --accent: oklch(0.78 0.18 65);
+  --accent-foreground: oklch(0.13 0.025 270);
+  --destructive: oklch(0.62 0.22 25);
+  --destructive-foreground: oklch(0.98 0 0);
+  --border: oklch(1 0 0 / 8%);
+  --input: oklch(1 0 0 / 10%);
+  --ring: oklch(0.78 0.18 65 / 60%);
+
+  --gradient-primary: linear-gradient(135deg, oklch(0.78 0.18 65), oklch(0.85 0.16 75));
+  --gradient-radial-glow: radial-gradient(circle at 50% 0%, oklch(0.78 0.18 65 / 0.25), transparent 60%);
+  --gradient-hero: radial-gradient(ellipse at top, oklch(0.22 0.06 60 / 0.5), transparent 60%),
+                   radial-gradient(ellipse at bottom right, oklch(0.25 0.08 270 / 0.4), transparent 60%);
+  --shadow-glow: 0 0 60px -10px oklch(0.78 0.18 65 / 0.5);
+  --shadow-glow-sm: 0 0 30px -8px oklch(0.78 0.18 65 / 0.45);
+  --shadow-elevated: 0 20px 60px -20px oklch(0 0 0 / 0.6);
 }
 
-body{
-  color: white;
-  background-color:  #090908;
+.dark { color-scheme: dark; }
+
+@layer base {
+  * { border-color: var(--color-border); }
+  html { color-scheme: dark; }
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+  }
+  h1, h2, h3, h4, h5 { font-family: var(--font-display); letter-spacing: -0.02em; }
 }
 
-.no-scrollbar{
-   scrollbar-width: none;
+@layer utilities {
+  .text-gradient {
+    background: var(--gradient-primary);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .bg-grid {
+    background-image:
+      linear-gradient(to right, oklch(1 0 0 / 0.04) 1px, transparent 1px),
+      linear-gradient(to bottom, oklch(1 0 0 / 0.04) 1px, transparent 1px);
+    background-size: 56px 56px;
+  }
+  .glass {
+    background: oklch(1 0 0 / 0.03);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: 1px solid oklch(1 0 0 / 0.08);
+  }
+  .glass-strong {
+    background: oklch(1 0 0 / 0.06);
+    backdrop-filter: blur(20px);
+    border: 1px solid oklch(1 0 0 / 0.1);
+  }
+  .glow-orange { box-shadow: var(--shadow-glow); }
+  .glow-orange-sm { box-shadow: var(--shadow-glow-sm); }
+  .radial-fade {
+    mask-image: radial-gradient(ellipse at center, black 40%, transparent 80%);
+  }
+  .scrollbar-none::-webkit-scrollbar { display: none; }
 }
 
-
-input::-webkit-outer-spin-button,
-input::webkit-inner-spin-button{
-   -webkit-appearance: none;
+@keyframes float-y {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-14px); }
 }
-
-::-webkit-calendar-picker-indicator {
-   filter: invert(1);
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 20px -5px oklch(0.78 0.18 65 / 0.5); }
+  50% { box-shadow: 0 0 40px -5px oklch(0.78 0.18 65 / 0.8); }
 }
-
-/* Animation pour l'apparition en fondu */
-@keyframes fade-in { 
-  0% { opacity: 0; transform: translateY(-10px); } 
-  100% { opacity: 1; transform: translateY(0); } 
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
 }
-
-.animate-fade-in { 
-  animation: fade-in 0.3s ease-out; 
-}
+.animate-float { animation: float-y 6s ease-in-out infinite; }
+.animate-pulse-glow { animation: pulse-glow 3s ease-in-out infinite; }
+.animate-marquee { animation: marquee 30s linear infinite; }
