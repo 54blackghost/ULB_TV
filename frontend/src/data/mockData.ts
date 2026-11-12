@@ -11,25 +11,22 @@ export const mockArticles = [
 
     excerpt: "Découvrez toutes les nouveautés de Laravel 10 et apprenez à créer votre première application web moderne avec ce framework PHP puissant.",
 
-    author: {
+    author: "mockAuthor",
 
-      name: "Arthur Monney",
+    publishedAt: "08-01-2024",
 
-      avatar: "https://images.pexels.com/photos/614810/pexels-photo-614810.jpeg?auto=compress&cs=tinysrgb&w=100"
-
-    },
-
-    publishedAt: "12 Jan 2024",
-
-    readTime: "8 min de lecture",
+    readTime: 102,
 
     views: 1240,
 
     likes: 89,
 
-    category: "Laravel",
+    categorys: [
+            { "name": "LARAVEL" },
+            {  "name": "API REST" },
+        ],
 
-    vote_average: "6.4",
+    vote_average: 6.4,
 
     image: "https://images.pexels.com/photos/11035380/pexels-photo-11035380.jpeg?auto=compress&cs=tinysrgb&w=800"
 
@@ -43,25 +40,22 @@ export const mockArticles = [
 
     excerpt: "Apprenez à optimiser vos applications PHP pour des performances maximales avec des techniques avancées et des outils professionnels.",
 
-    author: {
+    author: "mockAuthor",
 
-      name: "Stephane Mounong",
+    publishedAt: "08-01-2024",
 
-      avatar: "https://images.pexels.com/photos/91227/pexels-photo-91227.jpeg?auto=compress&cs=tinysrgb&w=100"
-
-    },
-
-    publishedAt: "10 Jan 2024",
-
-    readTime: "12 min de lecture",
+    readTime: 107,
 
     views: 987,
 
     likes: 76,
 
-    category: "PHP",
+    categorys: [
+            { "name": "PHP" },
+            {  "name": "PHP OOP" },
+        ],
 
-    vote_average: "6.4",
+     vote_average: 6.4,
 
     image: "https://images.pexels.com/photos/1181677/pexels-photo-1181677.jpeg?auto=compress&cs=tinysrgb&w=800"
 
@@ -75,25 +69,50 @@ export const mockArticles = [
 
     excerpt: "Créez des APIs sécurisées avec Laravel Sanctum et implémentez une authentification robuste pour vos applications mobiles et web.",
 
-    author: {
+    author: "mockAuthor",
 
-      name: "Bovealexandre",
+    publishedAt: "08-01-2024",
 
-      avatar: "https://images.pexels.com/photos/1040880/pexels-photo-1040880.jpeg?auto=compress&cs=tinysrgb&w=100"
-
-    },
-
-    publishedAt: "8 Jan 2024",
-
-    readTime: "15 min de lecture",
+    readTime: 170,
 
     views: 1456,
 
     likes: 102,
 
-    category: "API",
+    categorys: [
+            { "name": "API" },
+            {  "name": "API REST" },
+        ],
 
-    vote_average: "6.4",
+     vote_average: 6.4,
+
+    image: "https://images.pexels.com/photos/1181679/pexels-photo-1181679.jpeg?auto=compress&cs=tinysrgb&w=800"
+
+  },
+  {
+
+    id: 4,
+
+    title: "API REST avec Laravel Sanctum : Authentification moderne",
+
+    excerpt: "Créez des APIs sécurisées avec Laravel Sanctum et implémentez une authentification robuste pour vos applications mobiles et web.",
+
+    authors:"mockAuthor",
+
+    publishedAt: "08-01-2024",
+
+    readTime: 130,
+
+    views: 1456,
+
+    likes: 102,
+
+    categorys: [
+            { "name": "API" },
+            {  "name": "API REST" },
+        ],
+
+     vote_average: 6.4,
 
     image: "https://images.pexels.com/photos/1181679/pexels-photo-1181679.jpeg?auto=compress&cs=tinysrgb&w=800"
 
@@ -101,7 +120,36 @@ export const mockArticles = [
 
 ];
 
+export const mockAuthor =[
+ {
 
+      name: "Bovealexandre",
+
+      avatar: "https://images.pexels.com/photos/1040880/pexels-photo-1040880.jpeg?auto=compress&cs=tinysrgb&w=100"
+
+    },
+     {
+
+      name: "Bovealexandre",
+
+      avatar: "https://images.pexels.com/photos/1040880/pexels-photo-1040880.jpeg?auto=compress&cs=tinysrgb&w=100"
+
+    },
+    {
+
+      name: "Arthur Monney",
+
+      avatar: "https://images.pexels.com/photos/614810/pexels-photo-614810.jpeg?auto=compress&cs=tinysrgb&w=100"
+
+    },
+     {
+
+      name: "Arthur Monney",
+
+      avatar: "https://images.pexels.com/photos/614810/pexels-photo-614810.jpeg?auto=compress&cs=tinysrgb&w=100"
+
+    },
+]
 
 export const mockQuestions = [
 

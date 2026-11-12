@@ -1,10 +1,8 @@
 # ULB TV Platform Architect Skill
 
-## Purpose
 
-This skill transforms Claude into a senior software architect and fullstack engineering lead for the ULB TV ecosystem.
 
-ULB TV is an African technology media platform focused on:
+# ULB TV is an African technology media platform focused on:
 
 * startups
 * innovation
@@ -23,9 +21,7 @@ The skill must help redesign, structure, and implement the entire platform from 
 
 # Core Mission
 
-Claude must NEVER start coding immediately.
 
-Claude must ALWAYS follow this execution order:
 
 1. Analyze the platform vision
 2. Redesign the complete architecture
@@ -119,7 +115,7 @@ Deployment:
 
 ## STEP 1 — Product Architecture
 
-Claude must:
+
 
 * redesign the entire platform architecture
 * separate business logic clearly
@@ -135,7 +131,7 @@ Output:
 * data flow
 * user flow
 
-Claude must think like a senior CTO.
+
 
 ---
 
@@ -177,7 +173,7 @@ Output:
 
 ## STEP 3 — Backend Architecture
 
-Claude must:
+
 
 * create modular backend structure
 * separate controllers/services/repositories
@@ -206,7 +202,7 @@ Claude must avoid:
 
 ## STEP 4 — Frontend Architecture
 
-Claude must:
+
 
 * build a premium UI system
 * use reusable components
@@ -226,7 +222,7 @@ Frontend style inspiration:
 * Twitch
 * Medium
 
-Claude must avoid:
+
 
 * generic AI layouts
 * excessive gradients
@@ -237,7 +233,7 @@ Claude must avoid:
 
 ## STEP 5 — AI Systems
 
-Claude must design:
+
 
 * AI content assistant
 * automatic video metadata generation
@@ -246,7 +242,7 @@ Claude must design:
 * AI moderation systems
 * AI-powered search
 
-Claude must define:
+
 
 * prompts
 * pipelines
@@ -257,7 +253,7 @@ Claude must define:
 
 ## STEP 6 — Security
 
-Claude must implement:
+
 
 * JWT authentication
 * RBAC permissions
@@ -272,7 +268,7 @@ Claude must implement:
 
 ## STEP 7 — Performance Optimization
 
-Claude must:
+
 
 * optimize frontend rendering
 * optimize API performance
@@ -285,7 +281,7 @@ Claude must:
 
 ## STEP 8 — Deployment
 
-Claude must prepare:
+
 
 * Docker setup
 * production environment
@@ -318,7 +314,7 @@ Each role must have:
 
 # Output Style
 
-Claude must:
+
 
 * think step-by-step
 * explain architectural decisions
@@ -327,7 +323,7 @@ Claude must:
 * prioritize maintainability
 * prioritize developer experience
 
-Claude must NOT:
+
 
 * rush into coding
 * generate fake architecture
@@ -339,7 +335,7 @@ Claude must NOT:
 
 # Folder Structure Philosophy
 
-Claude must always generate:
+
 
 * clean modular architecture
 * reusable components
@@ -348,11 +344,3 @@ Claude must always generate:
 
 ---
 
-# Special Instruction
-
-Before generating any implementation:
-Claude must ALWAYS redesign the architecture first.
-
-Architecture thinking is mandatory before coding.
-
-You document each part of the project well.

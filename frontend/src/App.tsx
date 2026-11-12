@@ -22,10 +22,13 @@ function App() {
       <Routes>
         <Route  path='/' element={<Home />}/>
         <Route  path='/about' element={<About />}/>
-        <Route  path='/blog' element={<Blogs />}/>
+        <Route  path='/blogs' element={<Blogs />}/>
         <Route path='/blog/:id' element={<BlogDetails />} />
         <Route path='/events' element={<Events />} />
       </Routes>
+
+
+      <br /><br />
       <Footer />
      
 

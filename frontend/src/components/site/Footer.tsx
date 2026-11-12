@@ -48,8 +48,8 @@ const Footer = () => {
         </div>
 
         <div className="pt-8 border-t border-border flex flex-col md:flex-row items-center justify-between gap-4">
-          <p className="text-xs text-muted-foreground">© {new Date().getFullYear()} ULB TV. Built in Africa, for the world.</p>
-          <p className="text-xs text-muted-foreground">ulbgroup8@gmail.com • +237 678 994 026</p>
+          <p className="text-xs text-muted-foreground">© {new Date().getFullYear()} by  <a href="#">ULB Agence</a>  </p>
+          <p className="text-xs text-muted-foreground">ULB TV. Built in Africa, for the world.</p>
         </div>
       </div>
     </footer>

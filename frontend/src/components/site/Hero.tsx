@@ -100,14 +100,10 @@ export function Hero() {
           >
             <Compass className="w-4 h-4" /> Explore Ecosystem
           </a>
-          <a
-            href="#community"
-            className="inline-flex items-center gap-2 px-7 py-4 rounded-full glass font-medium hover:border-cyan-glow transition-all"
-          >
-            <Users className="w-4 h-4" /> Join Community
-          </a>
-        </motion.div>
+         
+        </motion.div><br /><br />
       </div>
+      
     </section>
   );
 }
