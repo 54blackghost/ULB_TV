@@ -1,3 +1,8 @@
+# 🚫 Ne jamais commit .env ou credentials
+.env
+.env.local
+credentials.json
+
 # Logs
 logs
 *.log
@@ -10,7 +15,6 @@ lerna-debug.log*
 node_modules
 dist
 dist-ssr
-.env
 *.local
 
 # Editor directories and files
@@ -23,6 +27,3 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
-
-*storybook.log
-storybook-static
