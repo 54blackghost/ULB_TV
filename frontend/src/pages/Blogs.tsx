@@ -1,13 +1,31 @@
-import React from "react"
+import React, { useEffect, useState } from "react"
 import BlurCircle from "../components/ui/BlurCircle"
-import { mockArticles } from "../data/mockData"
+//import { mockArticles } from "../data/mockData"
 import BlogCard from "../components/site/BlogCard"
 
 
 
 const Blogs = () =>{
+    const [data, setData] = useState([]);
+
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const fetchData = async () => {
+    //pour tester sur mon pc, j'ai mis l'adresse ip de mon pc, mais il faudra la changer pour que ça fonctionne sur ton pc en mettant 
+    // l'adresse ip de ton pc
+    const response = await fetch('http://127.0.0.1:8000/api/v1/');
+    const json = await response.json();
+    setData(json);
+  };
+
+
+
+
   //boucle pour tester la presence d'une donnee
-  return mockArticles.length > 0 ?(
+  return data.length > 0 ?(
     <div className="relative my-40 mb-60 px-6 md:px lg:px-40 xl:px-44
     overflow-hidden min-h[80vh]">
 
@@ -19,7 +37,7 @@ const Blogs = () =>{
      <h1 className="text-lg font-medium my-4">Now Blogs</h1>
 
       <div className="flex flex-wrap max-sm:justify-center gap-8">
-        {mockArticles.map((blog) => (
+        {data.map((blog) => (
           //fonction permettant d'afficher les donnees stocker en fonction de l'id
           <BlogCard blog={blog} key={blog.id}/>
         ))}

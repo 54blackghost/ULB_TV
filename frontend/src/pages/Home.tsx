@@ -4,7 +4,7 @@ import React from 'react'
 
 import { Events } from '../components/site/Events'
 import FeaturesSection from '../components/site/FeaturesSection'
-//import BlogCard  from '../components/site/BlogCard'
+
 
  const Home = () => {
   return (

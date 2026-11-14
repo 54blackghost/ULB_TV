@@ -1,6 +1,6 @@
 
 import './App.css'
-import {Route, Routes, useLocation} from 'react-router-dom'
+import {Route, Routes} from 'react-router-dom'
 import {Toaster} from 'react-hot-toast'
 import  Navbar  from './components/site/Navbar'
 import  Home  from './pages/Home'
@@ -9,10 +9,12 @@ import  Footer  from './components/site/Footer'
 import BlogDetails from './pages/BlogDetails'
 import {About }  from './components/site/About'
 import { Events } from './components/site/Events'
+import { useEffect,  useState } from 'react'
 
 
 
 function App() {
+ 
   
 
   return(

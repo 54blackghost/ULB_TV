@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react"
-import {useNavigate, useParams} from 'react-router-dom'
+import { useNavigate, useParams} from 'react-router-dom'
 import BlurCircle from "../components/ui/BlurCircle"
 import { Eye, Heart, PlayCircleIcon, StarIcon} from "lucide-react"
 import timeFormat from "../lib/timeFormat"
-import { mockArticles } from "../data/mockData"
+//import { mockArticles } from "../data/mockData"
 import Loading from "../components/site/Loading"
 import BlogCard from "../components/site/BlogCard"
 
@@ -14,11 +14,25 @@ const BlogDetails = () =>{
   const navigate = useNavigate()
   const {id} = useParams()
   const [blogs, setBlogs] = useState(null)
+  const [data, setData] = useState([]);
+  
+  
+    useEffect(() => {
+      fetchData();
+    }, []);
+  
+    const fetchData = async () => {
+      //pour tester sur mon pc, j'ai mis l'adresse ip de mon pc, mais il faudra la changer pour que ça fonctionne sur ton pc en mettant 
+      // l'adresse ip de ton pc
+      const response = await fetch('http://127.0.0.1:8000/api/v1/');
+      const json = await response.json();
+      setData(json);
+    };
 
 
   //fonction pour afficher les details d'une serie
   const getDetail = async ()=>{
-    const details = mockArticles.find(details => details.id)
+    const details = data.find(details => details.id)
     if (details) {
       setBlogs({
       blog: details,
@@ -48,7 +62,7 @@ const BlogDetails = () =>{
             </div>
 
             <p className="text-gray-400 mt-2 text-sm leading-tight max-w-xl">
-              {blogs.blog.excerpt}
+              {blogs.blog.body}
             </p> 
 
             <p className="text-sm text-gray-400 mt-2">
@@ -98,7 +112,7 @@ const BlogDetails = () =>{
 
 
        <div className="flex justify-center mt-20">
-        <button onClick={()=>{navigate('/movies'); scrollTo(0,0)}} className="px-10
+        <button onClick={()=>{navigate('/blogs'); scrollTo(0,0)}} className="px-10
         py-3 text-sm bg-primary hover:bg-primary-dull transition
         rounded-md font-medium cursor-pointer">
          Show more 

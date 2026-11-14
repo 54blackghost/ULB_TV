@@ -1,0 +1,60 @@
+Pour connecter Supabase à un projet Django, la méthode la plus directe et la plus propre consiste à utiliser Supabase comme votre base de données PostgreSQL principale.
+Voici les étapes précises pour effectuer cette liaison.
+
+1. Récupérer les identifiants de connexion sur Supabase
+
+1. Connectez-vous à votre tableau de bord Supabase et ouvrez votre projet.
+2. Cliquez sur le bouton Connect (en haut au centre) ou allez dans Project Settings > Database.
+3. Repérez la section Connection string et sélectionnez l'onglet URI.
+4. Point crucial (IPv4 vs IPv6) : Par défaut, la connexion directe utilise IPv6. Si votre ordinateur ou votre serveur d'hébergement ne le supporte pas, sélectionnez le mode Transaction ou Session (via le Connection Pooler Supavisor) qui fournit une adresse compatible IPv4.
+5. Copiez l'URL qui ressemble à ceci :
+postgresql://postgres.[votre-id]:[VOTRE-MOT-DE-PASSE]@://supabase.com
+
+2. Installer le pilote PostgreSQL dans Django
+
+Dans le terminal de votre environnement virtuel Python, installez psycopg (le connecteur PostgreSQL moderne pour Django) ainsi que dj-database-url pour gérer facilement l'URL de connexion :
+bash
+pip install "psycopg[binary]" dj-database-url python-dotenv
+Use code with caution.
+
+3. Configurer settings.py
+
+À la racine de votre projet (au même niveau que manage.py), créez un fichier .env pour ne jamais exposer votre mot de passe dans votre code source :
+env
+DATABASE_URL=postgresql://postgres.xxxx:votre_mot_de_passe@://supabase.com
+Use code with caution.
+Ensuite, ouvrez le fichier settings.py de votre projet Django et modifiez la section DATABASES comme suit :
+python
+import os
+import dj_database_url
+from dotenv import load_dotenv
+
+# Charge les variables du fichier .env
+load_dotenv()
+
+DATABASES = {
+    'default': dj_database_url.config(
+        default=os.environ.get('DATABASE_URL'),
+        conn_max_age=600,
+        conn_health_checks=True,
+        ssl_require=True,
+    )
+}
+Use code with caution.
+Note : Si vous utilisez le Transaction Pooler (port 6543) avec PgBouncer/Supavisor, ajoutez 'DISABLE_SERVER_SIDE_CURSORS': True dans les options de votre base de données si vous rencontrez des erreurs de curseur avec Django.
+
+4. Tester la connexion et créer les tables
+
+Lancez les migrations natives de Django depuis votre terminal pour vérifier que la connexion fonctionne et créer les tables système (auth_user, django_session, etc.) directement dans Supabase :
+bash
+python manage.py migrate
+Use code with caution.
+Si la commande s'exécute sans erreur, retournez sur votre interface Supabase dans l'onglet Table Editor : vous verrez apparaître toutes les tables de Django.
+
+Bonus : Utiliser le Stockage ou l'Auth de Supabase dans Django
+
+Si vous souhaitez aussi utiliser les autres services (upload de fichiers vers Supabase Storage, vérification de tokens JWT, etc.) en plus de la base de données, installez le SDK officiel Python :
+bash
+pip install supabase
+Use code with caution.
+Vous pourrez ensuite initialiser le client dans votre code Python avec l'URL de votre projet et votre clé service_role ou anon (disponibles dans Project Settings > API).
